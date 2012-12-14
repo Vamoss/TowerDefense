@@ -1,4 +1,11 @@
 package {
+	import display.enemy.Enemy;
+	import display.map.DirectBlock;
+	import display.map.EmptyBlock;
+	import display.screen.ScreenLose;
+	import display.screen.ScreenWin;
+	import display.shooter.Turret;
+	
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -159,7 +166,7 @@ package {
 					block.graphics.beginFill(0x333333);
 					block.graphics.drawRect(0,0,25,25);
 					block.graphics.endFill();
-					addChild(block);
+					roadHolder.addChild(block);
 					//and set the coordinates to be relative to the place in the array
 					block.x= (i-row*22)*25;
 					block.y = row*25;
@@ -175,7 +182,7 @@ package {
 				} else if(lvlArray[i] is String){//if it's a string, meaning a special block
 					//then create a special block
 					block = new DirectBlock(this, lvlArray[i],(i-row*22)*25,row*25);
-					addChild(block);
+					roadHolder.addChild(block);
 				}
 				for(var c:int = 1;c<=16;c++){
 					if(i == c*22-1){
