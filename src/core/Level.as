@@ -16,6 +16,14 @@ package core{
 		public var startCoord:int;//the coordinates of the beginning of the road
 		public var lvlArray:Array;//this array will hold the formatting of the roads
 		
+		public var currentEnemy:int;//the current enemy that we're creating from the array
+		public var enemyTime:int;//how many frames have elapsed since the last enemy was created
+		public var enemyLimit:int;//how many frames are allowed before another enemy is created
+		public var enemyArray:Array;//this array will tell the function when to create an enemy
+		public var enemiesLeft:int;//how many enemies are left on the field
+		
+		
+		
 		//the names of these variables explain what they do
 		public var currentLvl:int;
 		
@@ -42,6 +50,20 @@ package core{
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 			];
+			
+			enemyArray = [
+				[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],//1's will just represent an enemy to be created
+				[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],//another row means another level
+				[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
+				[100],
+				[5,6,7,6,5,6,7,6,5,6,7,6,5,6,7,6,5,6,7,6,5,6,7,6,5,6,7,6,5],
+				[250,250,250]
+			];
+			
+			
+			currentEnemy = 0;
+			enemyTime = 0;
+			enemyLimit = 12;
 			
 		}
 	}

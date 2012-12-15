@@ -22,12 +22,6 @@ package {
 		//the names of these variables explain what they do
 		public var isGameOver:Boolean;
 		
-		private var currentEnemy:int;//the current enemy that we're creating from the array
-		private var enemyTime:int;//how many frames have elapsed since the last enemy was created
-		private var enemyLimit:int;//how many frames are allowed before another enemy is created
-		private var enemyArray:Array;//this array will tell the function when to create an enemy
-		public var enemiesLeft:int;//how many enemies are left on the field
-		
 		public var money:int;//how much money the player has to spend on turrets
 		public var lives:int;//how many lives the player has
 		
@@ -80,9 +74,9 @@ package {
 		}
 		
 		private function startGame():void{//we'll run this function every time a new level begins
-			for(var i:int=0;i<enemyArray[level.currentLvl-1].length;i++){
-				if(enemyArray[level.currentLvl-1][i] != 0){
-					enemiesLeft ++;
+			for(var i:int=0;i<level.enemyArray[level.currentLvl-1].length;i++){
+				if(level.enemyArray[level.currentLvl-1][i] != 0){
+					level.enemiesLeft ++;
 				}
 			}
 		}
@@ -103,32 +97,14 @@ package {
 		{
 			isGameOver=true;//set the game to be over
 			
-			//reset all the stats
-			currentEnemy = 0;
-			enemyTime = 0;
-			enemyLimit = 12;
-			enemiesLeft = 0;
-			
 			removeEventListener(Event.ENTER_FRAME, update);
 		}
 		
 		public function initVars():void{
 			level.start();
 			
-			enemyArray = [
-				[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],//1's will just represent an enemy to be created
-				[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],//another row means another level
-				[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
-				[100],
-				[5,6,7,6,5,6,7,6,5,6,7,6,5,6,7,6,5,6,7,6,5,6,7,6,5,6,7,6,5],
-				[250,250,250]
-			];
-			
 			isGameOver = false;
 			
-			currentEnemy = 0;
-			enemyTime = 0;
-			enemyLimit = 12;
 			money=100;
 			lives=20;
 			
@@ -151,15 +127,15 @@ package {
 				
 				makeEnemies();//we'll just make some enemies
 				
-				if(enemiesLeft==0){//if there are no more enemies left
+				if(level.enemiesLeft==0){//if there are no more enemies left
 					
 					level.currentLvl ++;//continue to the next level
 					
-					if(level.currentLvl > enemyArray.length){
+					if(level.currentLvl > level.enemyArray.length){
 						gameOver();
 						addChild(screenWin);
 					}else{
-						currentEnemy = 0;//reset the amount of enemies there are
+						level.currentEnemy = 0;//reset the amount of enemies there are
 						startGame();//restart the game
 					}
 					
@@ -168,21 +144,21 @@ package {
 				txtLevel.text = 'Level '+level.currentLvl;
 				txtMoney.text = '$'+money;
 				txtLives.text = 'Lives: '+lives;
-				txtEnemiesLeft.text = 'Enemies Left:  '+enemiesLeft;
+				txtEnemiesLeft.text = 'Enemies Left:  '+level.enemiesLeft;
 			}
 		}
 		
 		private function makeEnemies():void{//this function will add enemies to the field
-			if(enemyTime < enemyLimit){//if it isn't time to make them yet
-				enemyTime ++;//then keep on waiting
+			if(level.enemyTime < level.enemyLimit){//if it isn't time to make them yet
+				level.enemyTime ++;//then keep on waiting
 			} else {
-				var theCode:int = enemyArray[level.currentLvl-1][currentEnemy];//get the code from the array
+				var theCode:int = level.enemyArray[level.currentLvl-1][level.currentEnemy];//get the code from the array
 				if(theCode != 0){//if it isn't an empty space
 					var newEnemy:Enemy = new Enemy(this, theCode);//then create a new enemy and pass in the code
 					enemyHolder.addChild(newEnemy);//and add it to the enemyholder
 				}
-				currentEnemy ++;//move on to the next enemy
-				enemyTime = 0;//and reset the time
+				level.currentEnemy ++;//move on to the next enemy
+				level.enemyTime = 0;//and reset the time
 			}
 		}
 	}
