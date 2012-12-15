@@ -1,0 +1,3 @@
+package display.bullet{	import display.enemy.Enemy;		import flash.display.MovieClip;	import flash.events.Event;
+
+	public class Ice extends Bullet {				public function Ice(root:TowerDefense) {			super(root);		}				override protected function beginClass(e:Event):void {			super.beginClass(e);			//drawing this guy (it'll be a small white circle)			this.graphics.clear();			this.graphics.beginFill(0x0000FF);			this.graphics.drawCircle(0,0,2);			this.graphics.endFill();		}				override protected function onHit():void		{			super.onHit();						target.accelSpeed = 0.5;		}	}}
