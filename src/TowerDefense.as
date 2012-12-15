@@ -2,11 +2,7 @@ package {
 	import core.Level;
 	
 	import display.enemy.Enemy;
-	import display.map.Block;
-	import display.map.DirectBlock;
-	import display.map.EmptyBlock;
 	import display.map.Map;
-	import display.map.RoadBlock;
 	import display.screen.Lose;
 	import display.screen.Win;
 	import display.shooter.Turret;
@@ -20,16 +16,8 @@ package {
 	[SWF(width="550", height="400", frameRate="30", backgroundColor="#ffffff")]
 	public class TowerDefense extends Sprite
 	{
-		public const blockWidth:int = 25;
-		public const blockHalfWidth:Number = 12.5;
-		
-		//setting vars to step in for turns and special blocks
-		private const S:String = 'START';
-		private const F:String = 'FINISH';
-		private const U:String = 'UP';
-		private const R:String = 'RIGHT';
-		private const D:String = 'DOWN';
-		private const L:String = 'LEFT';
+		public const gridScale:int = 25;
+		public const gridScaleHalf:Number = 12.5;
 		
 		//the names of these variables explain what they do
 		public var isGameOver:Boolean;
@@ -80,7 +68,7 @@ package {
 			addChild(txtEnemiesLeft);
 			
 			rangeCircle.graphics.beginFill(0x006600,.5);
-			rangeCircle.graphics.drawCircle(12.5,12.5,100);
+			rangeCircle.graphics.drawCircle(gridScaleHalf,gridScaleHalf,100);
 			rangeCircle.graphics.endFill();
 			
 			map = new Map(this)
@@ -149,8 +137,8 @@ package {
 		public function makeTurret(xValue:int,yValue:int):void{//this will need to be told the x and y values
 			var turret:Turret = new Turret(this);//creating a variable to hold the Turret
 			//changing the coordinates
-			turret.x = xValue+12.5;
-			turret.y = yValue+12.5;
+			turret.x = xValue+gridScaleHalf;
+			turret.y = yValue+gridScaleHalf;
 			addChild(turret);//add it to the stage
 		}
 		
@@ -187,7 +175,7 @@ package {
 		private function makeEnemies():void{//this function will add enemies to the field
 			if(enemyTime < enemyLimit){//if it isn't time to make them yet
 				enemyTime ++;//then keep on waiting
-			} else {//otherwise
+			} else {
 				var theCode:int = enemyArray[level.currentLvl-1][currentEnemy];//get the code from the array
 				if(theCode != 0){//if it isn't an empty space
 					var newEnemy:Enemy = new Enemy(this, theCode);//then create a new enemy and pass in the code

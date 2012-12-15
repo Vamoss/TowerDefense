@@ -1,3 +1,3 @@
 package display.map{	import flash.events.Event;
 	import flash.events.MouseEvent;
-		public class RoadBlock extends Block{				public function RoadBlock(root:TowerDefense, iniX:Number, iniY:Number){			super(root, iniX, iniY);		}				override protected function beginClass(e:Event):void{			super.beginClass(e);						graphics.beginFill(0x111111);			graphics.drawRect(0,0,25,25);			graphics.endFill();		}	}}
+		public class RoadBlock extends Block{				public function RoadBlock(root:TowerDefense, iniX:Number, iniY:Number){			super(root, iniX, iniY);		}				override protected function beginClass(e:Event):void{			super.beginClass(e);						graphics.beginFill(0x111111);			graphics.drawRect(0,0,_root.gridScale,_root.gridScale);			graphics.endFill();		}	}}
