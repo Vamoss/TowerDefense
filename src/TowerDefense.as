@@ -17,9 +17,11 @@ package {
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	
-	[SWF(width="550", height="400", frameRate="24", backgroundColor="#ffffff")]
+	[SWF(width="550", height="400", frameRate="30", backgroundColor="#ffffff")]
 	public class TowerDefense extends Sprite
 	{
+		public const blockWidth:int = 25;
+		public const blockHalfWidth:Number = 12.5;
 		
 		//setting vars to step in for turns and special blocks
 		private const S:String = 'START';
@@ -119,7 +121,7 @@ package {
 			enemyLimit = 12;
 			enemiesLeft = 0;
 			
-			removeEventListener(Event.ENTER_FRAME, update);//remove this listener
+			removeEventListener(Event.ENTER_FRAME, update);
 		}
 		
 		public function initVars():void{
@@ -154,27 +156,32 @@ package {
 		
 		private function update(e:Event):void{
 			//if there aren't any levels left
-			if(level.currentLvl > enemyArray.length){
-				gameOver();
-				addChild(screenWin);
-				return;
-			}
 			if(lives<=0){//if the user runs out of lives
 				gameOver();
 				addChild(screenLose);
-				return;
+			}else if(!isGameOver){
+				
+				makeEnemies();//we'll just make some enemies
+				
+				if(enemiesLeft==0){//if there are no more enemies left
+					
+					level.currentLvl ++;//continue to the next level
+					
+					if(level.currentLvl > enemyArray.length){
+						gameOver();
+						addChild(screenWin);
+					}else{
+						currentEnemy = 0;//reset the amount of enemies there are
+						startGame();//restart the game
+					}
+					
+				}
+				//Updating the text fields
+				txtLevel.text = 'Level '+level.currentLvl;
+				txtMoney.text = '$'+money;
+				txtLives.text = 'Lives: '+lives;
+				txtEnemiesLeft.text = 'Enemies Left:  '+enemiesLeft;
 			}
-			makeEnemies();//we'll just make some enemies
-			if(enemiesLeft==0){//if there are no more enemies left
-				level.currentLvl ++;//continue to the next level
-				currentEnemy = 0;//reset the amount of enemies there are
-				startGame();//restart the game
-			}
-			//Updating the text fields
-			txtLevel.text = 'Level '+level.currentLvl;
-			txtMoney.text = '$'+money;
-			txtLives.text = 'Lives: '+lives;
-			txtEnemiesLeft.text = 'Enemies Left:  '+enemiesLeft;
 		}
 		
 		private function makeEnemies():void{//this function will add enemies to the field
