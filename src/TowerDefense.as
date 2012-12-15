@@ -13,6 +13,12 @@ package {
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	
+	//TODO:
+	//metas passar de fase em 10s
+	//bola especial
+	//inimigos que nao devem morrer
+	//controlar atiradores
+	
 	[SWF(width="550", height="400", frameRate="30", backgroundColor="#ffffff")]
 	public class TowerDefense extends Sprite
 	{
@@ -36,9 +42,10 @@ package {
 		private var txtMoney:TextField = new TextField();		
 		private var txtLives:TextField = new TextField();		
 		private var txtEnemiesLeft:TextField = new TextField();
+		private var txtTimer:TextField = new TextField();
 		
-		private var screenWin:Win = new Win();
-		private var screenLose:Lose = new Lose();
+		private var screenWin:Win;
+		private var screenLose:Lose;
 		
 		public function TowerDefense()
 		{
@@ -46,12 +53,18 @@ package {
 			txtLevel.x = 
 			txtMoney.x = 
 			txtLives.x = 
-			txtEnemiesLeft.x = 10;
+			txtEnemiesLeft.x = 
+			txtTimer.x = 10;
 			
 			txtLevel.y = 310;
 			txtMoney.y = 330;
 			txtLives.y = 350;
 			txtEnemiesLeft.y = 370;
+			txtTimer.y = 390;
+			
+			
+			screenWin = new Win(this);
+			screenLose = new Lose(this);
 			
 			screenLose.addEventListener(MouseEvent.CLICK, restartGame);
 			screenWin.addEventListener(MouseEvent.CLICK, restartGame);
@@ -60,6 +73,7 @@ package {
 			addChild(txtMoney);
 			addChild(txtLives);
 			addChild(txtEnemiesLeft);
+			addChild(txtTimer);
 			
 			rangeCircle.graphics.beginFill(0x006600,.5);
 			rangeCircle.graphics.drawCircle(gridScaleHalf,gridScaleHalf,100);
@@ -132,8 +146,8 @@ package {
 					level.currentLvl ++;//continue to the next level
 					
 					if(level.currentLvl > level.enemyArray.length){
-						gameOver();
 						addChild(screenWin);
+						gameOver();
 					}else{
 						level.currentEnemy = 0;//reset the amount of enemies there are
 						startGame();//restart the game
@@ -145,6 +159,7 @@ package {
 				txtMoney.text = '$'+money;
 				txtLives.text = 'Lives: '+lives;
 				txtEnemiesLeft.text = 'Enemies Left:  '+level.enemiesLeft;
+				txtTimer.text = 'Time: '+level.timeElapsed;
 			}
 		}
 		

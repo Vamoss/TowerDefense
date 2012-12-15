@@ -1,0 +1,3 @@
+package display.screen{//creating the basic skeleton	import display.bullet.Bullet;	import display.enemy.Enemy;		import flash.display.MovieClip;	import flash.events.Event;	import flash.events.MouseEvent;
+
+	public class Screen extends MovieClip{		protected var _root:TowerDefense;				public function Screen(root:TowerDefense){			_root = root;						//adding the required listeners			this.addEventListener(Event.ADDED, beginClass);		}				protected function beginClass(e:Event):void{					}	}}

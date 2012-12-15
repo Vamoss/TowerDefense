@@ -1,4 +1,5 @@
 package core{
+	import flash.utils.Timer;
 
 	public class Level
 	{
@@ -22,14 +23,14 @@ package core{
 		public var enemyArray:Array;//this array will tell the function when to create an enemy
 		public var enemiesLeft:int;//how many enemies are left on the field
 		
-		
+		private var timer:Timer;
 		
 		//the names of these variables explain what they do
 		public var currentLvl:int;
 		
 		public function Level()
 		{
-			
+			timer = new Timer(1000);
 		}
 		
 		public function start():void
@@ -65,6 +66,22 @@ package core{
 			enemyTime = 0;
 			enemyLimit = 12;
 			
+			timer.reset();
+			timer.start();
+		}
+		
+		public function stop():void
+		{
+			timer.stop();	
+		}
+		
+		public function get timeElapsed():String
+		{	
+			var minutes:uint = timer.currentCount/60;
+			var seconds:uint = timer.currentCount - (minutes * 60);
+			var minuteString:String = (minutes < 10 ? "0":"") + minutes;
+			var secondString:String = (seconds < 10 ? "0":"") + seconds;
+			return minuteString + ":" + secondString;
 		}
 	}
 }
