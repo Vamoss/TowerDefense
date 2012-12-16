@@ -25,8 +25,7 @@ package core{
 		
 		private var timer:Timer;
 		
-		//the names of these variables explain what they do
-		public var currentLvl:int;
+		public var currentWave:int;
 		
 		public function Level()
 		{
@@ -35,7 +34,7 @@ package core{
 		
 		public function start():void
 		{
-			currentLvl = 1;
+			currentWave = 1;
 		
 			lvlArray = [
 				0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -58,7 +57,8 @@ package core{
 				[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
 				[100],
 				[5,6,7,6,5,6,7,6,5,6,7,6,5,6,7,6,5,6,7,6,5,6,7,6,5,6,7,6,5],
-				[250,250,250]
+				[150,150,150,150],
+				[250,250,250,250,250,250,250]
 			];
 			
 			
@@ -68,6 +68,14 @@ package core{
 			
 			timer.reset();
 			timer.start();
+		}
+		
+		public function nextWave():void
+		{
+			currentWave ++;
+			currentEnemy = 0;//reset the amount of enemies there are
+			enemyTime = -60;//wait some time to start next level
+			if(enemyLimit>5) enemyLimit--;
 		}
 		
 		public function stop():void
